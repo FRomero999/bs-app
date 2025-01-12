@@ -10,10 +10,21 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST home page. */
+/* Ruta para guardar el usuario en la aplicación */
 router.post('/', function(req, res, next) {
   var new_user = { name :req.body.nombre, email: req.body.email }
   data.add(new_user)
   res.redirect('/')
 });
+
+/* GET delete page. */
+/* Ruta para eliminar un usuario concreto */
+router.get('/delete/:index', function(req, res, next) {
+  var index = req.params.index;
+  console.log(index);
+  data.removeAt(index);
+  res.redirect('/');
+});
+
 
 module.exports = router;
