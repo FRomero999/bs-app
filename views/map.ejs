@@ -4,10 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa</title>
+    <link rel="stylesheet" href="leaflet.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+
 </head>
-<body>
+<body class="min-vh-100">
+
+    <audio src="/ascent-braam-magma-brass-d-cinematic-trailer-sound-effect-222269.mp3" id="sonido"></audio>
+
+    <div id="mapa" class="min-vh-100 vw-100"></div>
+    <div class="position-fixed border bg-secondary p-3 top-0 end-0 m-3 shadow" style="z-index: 9999;">
+        <button id="boton">Show my position</button>
+    </div>
+
+    <script src="leaflet.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="/javascripts/front.js"></script>
+    <script>
+        var map = L.map('mapa').setView([51.505, -0.09], 7);
+
+        const audioplayer = new Audio("/ascent-braam-magma-brass-d-cinematic-trailer-sound-effect-222269.mp3")
+        //const audioplayer = document.querySelector("#sonido")
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        const b = document.querySelector("#boton")       
+        b?.addEventListener("click",()=>{
+
+            window.navigator.geolocation.getCurrentPosition(
+                (pos)=>{
+                    const position = [pos.coords.latitude,pos.coords.longitude];
+                    var circle = L.circle(position, {
+                        color: 'red',
+                        fillColor: '#f03',
+                        fillOpacity: 0.5,
+                        radius: 500
+                    }).addTo(map);
+                    var marker = L.marker(position).addTo(map);
+                    marker.bindPopup("<h1>Hola</h1>")
+                    marker.addEventListener("click",()=>{
+                        console.log("hola!")
+
+                    })
+                    map.setView(position,13)
+                    audioplayer.currentTime=0;
+                    audioplayer.play();
+                },
+                (error)=>{
+                    console.log(error)
+                }
+            )
 
 
-    
+        });
+
+    </script>
 </body>
 </html>
