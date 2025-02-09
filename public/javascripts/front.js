@@ -34,9 +34,13 @@ if(bReload) bReload.addEventListener("click",()=>{
 })
 
 
-let table = new DataTable('#tabla', {
+try {
+    let table = new DataTable('#tabla', {
     responsive: true,
     language: {
         url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
     },
-});
+})
+} catch {
+    console.log("Error con DataTable")
+}

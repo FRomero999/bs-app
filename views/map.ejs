@@ -24,7 +24,6 @@
     <script src="/javascripts/front.js"></script>
     <script>
         Swal.fire("SweetAlert2 is working!");
-s
 
         var map = L.map('mapa').setView([51.505, -0.09], 7);
 
@@ -35,6 +34,22 @@ s
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
+
+        fetch("capitales.geojson")
+        .then( response => response.json() )
+        .then( data => {
+            data.features.forEach( (el)=>{
+                console.log( el.properties.nombre)
+                let marker = L.marker([el.geometry.coordinates[1],el.geometry.coordinates[0]]).addTo(map);
+                marker.addEventListener("click",()=>{
+                        Swal.fire({
+                            title: el.properties.nombre,
+                            icon: "success",
+                            draggable: true
+                        });
+                    })
+            })
+        } )
 
         const b = document.querySelector("#boton")       
         b?.addEventListener("click",()=>{
