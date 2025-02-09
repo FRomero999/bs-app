@@ -19,8 +19,13 @@
 
     <script src="leaflet.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
+    <script src="sweetalert2.all.min.js"></script>
+
     <script src="/javascripts/front.js"></script>
     <script>
+        Swal.fire("SweetAlert2 is working!");
+s
+
         var map = L.map('mapa').setView([51.505, -0.09], 7);
 
         const audioplayer = new Audio("/ascent-braam-magma-brass-d-cinematic-trailer-sound-effect-222269.mp3")
@@ -46,8 +51,14 @@
                     var marker = L.marker(position).addTo(map);
                     marker.bindPopup("<h1>Hola</h1>")
                     marker.addEventListener("click",()=>{
-                        console.log("hola!")
-
+                        Swal.fire({
+                            imageUrl: "https://placeholder.pics/svg/300x1500",
+                            imageHeight: 500,
+                            imageAlt: "A tall image",
+                            title: "Drag me!",
+                            icon: "success",
+                            draggable: true
+                        });
                     })
                     map.setView(position,13)
                     audioplayer.currentTime=0;
